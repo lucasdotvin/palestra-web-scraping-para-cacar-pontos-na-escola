@@ -48,7 +48,10 @@ def get_item_category(content_core_item: Element) -> str:
     return item_category
 
 
-def get_item_details(content_core_item: Element, parent_path: str='') -> Dict[str, str]:
+def get_item_details(
+    content_core_item: Element,
+    parent_path: str=''
+) -> Dict[str, str]:
     """Obtém os detalhes do item fornecido.
     
     Arguments:
@@ -76,7 +79,10 @@ def get_item_details(content_core_item: Element, parent_path: str='') -> Dict[st
     return item_details
 
 
-def get_page_content_items(page_html: Element, parent_path: str='') -> List[Dict[str, str]]:
+def get_page_content_items(
+    page_html: Element,
+    parent_path: str=''
+) -> List[Dict[str, str]]:
     """Obtém os itens de uma página (diretório).
     
     Arguments:
@@ -105,7 +111,10 @@ def get_page_content_items(page_html: Element, parent_path: str='') -> List[Dict
     return detailed_content_items
 
 
-def get_content_tree(inital_url: str, session: HTMLSession) -> List[Dict[str, str]]:
+def get_content_tree(
+    inital_url: str,
+    session: HTMLSession
+) -> List[Dict[str, str]]:
     """Gera uma árvore de diretórios a partir da URL inicial definida.
     
     Arguments:

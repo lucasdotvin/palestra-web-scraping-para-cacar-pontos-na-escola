@@ -1,5 +1,8 @@
 import os
 
+from typing import Dict, List
+
+from requests_html import HTMLSession, Element
 
 ITEM_CATEGORY_BY_CONTENT_TYPE_CLASS = {
     'contenttype-folder': 'folder',
@@ -10,13 +13,29 @@ ITEM_CATEGORY_BY_CONTENT_TYPE_CLASS = {
 }
 
 
-def get_item_content_type_class(item_classes):
+def get_item_content_type_class(item_classes: List[str]) -> str:
+    """Retorna a classe com a definição do tipo de conteúdo do item.
+    
+    Arguments:
+        item_classes {List[str]} -- Lista de classes.
+    
+    Returns:
+        str -- Classe com a definição do tipo de conteúdo do item.
+    """
     for class_ in item_classes:
         if class_.startswith('contenttype'):
             return class_
 
 
-def get_item_category(content_core_item):
+def get_item_category(content_core_item: Element) -> str:
+    """Retorna a categoria adequada do item a partir de suas classes.
+    
+    Arguments:
+        content_core_item {Element} -- Objeto Element do elemento div alvo da função.
+    
+    Returns:
+        str -- Categoria do elemento. Pode ser: folder, file, link, alert ou document.
+    """
     item_classes = content_core_item.attrs['class']
     content_type_class = get_item_content_type_class(
         item_classes
@@ -29,7 +48,18 @@ def get_item_category(content_core_item):
     return item_category
 
 
-def get_item_details(content_core_item, parent_path=''):
+def get_item_details(content_core_item: Element, parent_path: str='') -> Dict[str, str]:
+    """Obtém os detalhes do item fornecido.
+    
+    Arguments:
+        content_core_item {Element} -- Objeto Element do elemento div do objeto a ser detalhado.
+    
+    Keyword Arguments:
+        parent_path {str} -- Caminho do diretório pai. Quando definido, é adicionado ao caminho do objeto trabalhado pela função. (default: {''})
+    
+    Returns:
+        Dict[str, str] -- Dicionário com detalhes do item.
+    """
     item_category = get_item_category(content_core_item)
 
     item_path = content_core_item.text
@@ -46,7 +76,18 @@ def get_item_details(content_core_item, parent_path=''):
     return item_details
 
 
-def get_page_content_items(page_html, parent_path=''):
+def get_page_content_items(page_html: Element, parent_path: str='') -> List[Dict[str, str]]:
+    """Obtém os itens de uma página (diretório).
+    
+    Arguments:
+        page_html {Element} -- Objeto Element da página.
+    
+    Keyword Arguments:
+        parent_path {str} -- Caminho do diretório superior. Quando definido, é adicionado ao caminho de todos os itens filhos desse diretório. (default: {''})
+    
+    Returns:
+        List[Dict[str, str]] -- Lista de dicionários com detalhes de cada item da página.
+    """
     content_core_div = page_html.find(
         'div#content-core',
         first=True
@@ -64,7 +105,17 @@ def get_page_content_items(page_html, parent_path=''):
     return detailed_content_items
 
 
-def get_content_tree(session):
+def get_content_tree(inital_url: str, session: HTMLSession) -> List[Dict[str, str]]:
+    """Gera uma árvore de diretórios a partir da URL inicial definida.
+    
+    Arguments:
+        inital_url {str} -- URL do diretório no topo da árvore.
+        session {HTMLSession} -- Objeto HTMLSession para execução das requisições HTTP.
+    
+    Returns:
+        List[Dict[str, str]] -- Lista de dicionários com detalhes dos itens e sub-itens.
+    """
+
     root_data = session.get(ROOT_FOLDER_URL)
     root_content = get_page_content_items(root_data.html)
 

@@ -139,3 +139,27 @@ def get_content_tree(
             tree.extend(sub_content)
 
     return tree
+
+
+def compare_trees(
+    base_tree: List[Dict[str, str]],
+    target_tree: List[Dict[str, str]]
+) -> List[Dict[str, str]]:
+    """Compara duas árvores de diretórios e retorna as discrepâncias.
+    Cada item da árvore-alvo será buscado na árvore-base para comparação.
+    Os itens não encontrados são retornados.
+    
+    Arguments:
+        base_tree {List[Dict[str, str]]} -- Árvore base para comparação.
+        target_tree {List[Dict[str, str]]} -- Árvore a ser comparada.
+    
+    Returns:
+        List[Dict[str, str]] -- Itens discrepantes entre as duas árvores.
+    """
+    difference = [
+        item
+        for item in target_tree
+        if item not in base_tree
+    ]
+
+    return difference

@@ -116,7 +116,7 @@ def get_content_tree(inital_url: str, session: HTMLSession) -> List[Dict[str, st
         List[Dict[str, str]] -- Lista de dicionários com detalhes dos itens e sub-itens.
     """
 
-    root_data = session.get(ROOT_FOLDER_URL)
+    root_data = session.get(inital_url)
     root_content = get_page_content_items(root_data.html)
 
     tree = root_content.copy()

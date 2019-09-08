@@ -1,5 +1,3 @@
-from requests_html import HTMLSession
-
 from helpers import *
 
 

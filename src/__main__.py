@@ -39,6 +39,5 @@ def main():
                 json.dumps(current_tree)
             )
 
-
 if __name__ == "__main__":
     main()

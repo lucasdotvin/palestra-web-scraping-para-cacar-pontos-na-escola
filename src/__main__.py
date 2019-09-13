@@ -1,6 +1,6 @@
 import json
 
-from helpers import *
+from helpers import compare_trees, get_content_tree
 
 MAIN_URL = r'http://docente.ifrn.edu.br/abrahaolopes/2017.1-integrado/2.02401.1v-poo'
 

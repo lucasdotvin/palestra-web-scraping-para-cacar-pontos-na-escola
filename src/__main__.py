@@ -2,12 +2,12 @@ import json
 
 from helpers import *
 
-ROOT_FOLDER_URL = r'http://docente.ifrn.edu.br/abrahaolopes/2017.1-integrado/2.02401.1v-poo'
+MAIN_URL = r'http://docente.ifrn.edu.br/abrahaolopes/2017.1-integrado/2.02401.1v-poo'
 
 
 def main():
     session = HTMLSession()
-    current_tree = get_content_tree(ROOT_FOLDER_URL, session)
+    current_tree = get_content_tree(MAIN_URL, session)
     with open('storage/tree.json', 'r') as stored_tree_file:
         stored_tree = json.load(stored_tree_file)
 

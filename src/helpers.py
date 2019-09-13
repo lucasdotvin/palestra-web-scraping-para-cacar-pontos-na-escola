@@ -1,8 +1,6 @@
 import os
 from typing import Dict, List
 
-from requests_html import Element, HTMLSession
-
 ITEM_CATEGORY = {
     'contenttype-folder': 'folder',
     'contenttype-file': 'file',

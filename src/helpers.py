@@ -3,7 +3,7 @@ from typing import Dict, List
 
 from requests_html import Element, HTMLSession
 
-ITEM_CATEGORY_BY_CONTENT_TYPE_CLASS = {
+ITEM_CATEGORY = {
     'contenttype-folder': 'folder',
     'contenttype-file': 'file',
     'contenttype-link': 'link',
@@ -40,7 +40,7 @@ def get_item_category(content_core_item: Element) -> str:
         item_classes
     )
 
-    item_category = ITEM_CATEGORY_BY_CONTENT_TYPE_CLASS.get(
+    item_category = ITEM_CATEGORY.get(
         content_type_class
     )
 
